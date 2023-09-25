@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 const Number = require("./models/number");
 const Items = require("./models/items");
-app.use(cors(""));
+app.use(cors("https://perupalembakery.onrender.com"));
 //-----------------------------------------------
 mongoose
   .connect(
