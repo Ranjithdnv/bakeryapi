@@ -34,6 +34,7 @@ webpush.setVapidDetails(
   apiKeys.publicKey,
   apiKeys.privateKey
 );
+console.log(0);
 const subDatabse = [
   // {
   //   endpoint:
