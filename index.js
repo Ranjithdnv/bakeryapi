@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 app.use(express.json());
 const cors = require("cors");
 const morgan = require("morgan");
+const webpush = require("web-push");
 
 var jsonParser = bodyParser.json({
   limit: 1024 * 1024 * 10,
@@ -23,6 +24,29 @@ app.use(bodyParser.json());
 const Number = require("./models/number");
 const Items = require("./models/items");
 app.use(cors("https://perupalembakery.onrender.com"));
+const apiKeys = {
+  publicKey:
+    "BB0IrPkMRgdZYW0Y120IhjA21jYbSTIybVO8xp0dxdCS-Qgc34dGP9571wwI4wyK7UkRMj3TSjEt2H1NjCN0x7E",
+  privateKey: "ugMp2KfAs_LOy-fH70bz3rHkLbLSZEu2OaaUOf_My7s",
+};
+webpush.setVapidDetails(
+  "mailto:rith8596@gmail.com",
+  apiKeys.publicKey,
+  apiKeys.privateKey
+);
+const subDatabse = [
+  // {
+  //   endpoint:
+  //     "https://fcm.googleapis.com/fcm/send/en_Em5-jHJw:APA91bGhtavH2UoFp1YUgQX6Q99MHT7f491jonjKlgcyeWLdqZnGQCQA35rNJZVOCxgAKX8gMH-96mv1wpi21vYf0VJcHNmrizsUcWoszL7mU8RgXjIVRoDJ2dXE92x_GgZ0QiCd2dJ8",
+  //   expirationTime: null,
+  //   keys: {
+  //     p256dh:
+  //       "BB0IrPkMRgdZYW0Y120IhjA21jYbSTIybVO8xp0dxdCS-Qgc34dGP9571wwI4wyK7UkRMj3TSjEt2H1NjCN0x7E",
+  //     auth: "ugMp2KfAs_LOy-fH70bz3rHkLbLSZEu2OaaUOf_My7s",
+  //   },
+  // },
+];
+let message = "";
 //-----------------------------------------------
 mongoose
   .connect(
@@ -144,6 +168,34 @@ app.get("/howmuchnumber", async (req, res) => {
     res.status(500).json(err.message);
   }
   // res.send(req.body)
+});
+//
+
+app.post("/subscribe", async (req, res) => {
+  try {
+    subDatabse.push(req.body.subscription);
+    message = req.body.message;
+    console.log(req.body);
+    await webpush.sendNotification(subDatabse[0], message);
+    webpush.sendNotification(subDatabse[0], "Hello world");
+    res
+      .json({ status: "Success", message: "Subscription saved!" })
+      .catch((err) => {
+        err.message;
+      });
+  } catch {
+    (err) => {
+      console.log(err.message);
+    };
+  }
+});
+// .catch((err) => {
+//   console.log(err.message);
+// });
+
+app.get("/send-notification", (req, res) => {
+  webpush.sendNotification(subDatabse[0], "Hello world");
+  res.json({ statue: "Success", message: "Message sent to push service" });
 });
 //
 app.delete("/deleteitems", async (req, res) => {
