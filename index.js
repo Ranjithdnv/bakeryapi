@@ -31,7 +31,8 @@ const apiKeys = {
 };
 webpush.setVapidDetails(
   //"mailto:rith8596@gmail.com",
-  "https://serviceworke.rs/",
+  // "https://serviceworke.rs/",
+  "subject:subject",
   apiKeys.publicKey,
   apiKeys.privateKey
 );
