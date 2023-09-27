@@ -30,7 +30,8 @@ const apiKeys = {
   privateKey: "ugMp2KfAs_LOy-fH70bz3rHkLbLSZEu2OaaUOf_My7s",
 };
 webpush.setVapidDetails(
-  "mailto:rith8596@gmail.com",
+  //"mailto:rith8596@gmail.com",
+  "https://serviceworke.rs/",
   apiKeys.publicKey,
   apiKeys.privateKey
 );
