@@ -24,18 +24,17 @@ app.use(bodyParser.json());
 const Number = require("./models/number");
 const Items = require("./models/items");
 app.use(cors("https://perupalembakery.onrender.com"));
-const apiKeys = {
-  publicKey:
-    "BB0IrPkMRgdZYW0Y120IhjA21jYbSTIybVO8xp0dxdCS-Qgc34dGP9571wwI4wyK7UkRMj3TSjEt2H1NjCN0x7E",
-  privateKey: "ugMp2KfAs_LOy-fH70bz3rHkLbLSZEu2OaaUOf_My7s",
-};
-webpush.setVapidDetails(
-  //"mailto:rith8596@gmail.com",
-  // "https://serviceworke.rs/",
-  "subject:subject",
-  apiKeys.publicKey,
-  apiKeys.privateKey
-);
+// const apiKeys = {
+//   publicKey:
+//     "BB0IrPkMRgdZYW0Y120IhjA21jYbSTIybVO8xp0dxdCS-Qgc34dGP9571wwI4wyK7UkRMj3TSjEt2H1NjCN0x7E",
+//   privateKey: "ugMp2KfAs_LOy-fH70bz3rHkLbLSZEu2OaaUOf_My7s",
+// };
+// webpush.setVapidDetails(
+//   "mailto:rith8596@gmail.com",
+
+//   apiKeys.publicKey,
+//   apiKeys.privateKey
+// );
 console.log(0);
 const subDatabse = [
   // {
@@ -139,7 +138,7 @@ app.post("/numberadd", async (req, res) => {
 app.put("/numberupdate/", async (req, res) => {
   const newPost = await Number.findByIdAndUpdate(
     req.body._id,
-    { $set: { dayofarrival: req.body.dayofarrival } },
+    { $set: { dayofarrival: req.body.dayofarrival, date: req.body.date } },
     { new: true }
   );
   try {
